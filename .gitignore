@@ -1,1 +1,4 @@
 .idea
+venv
+env
+calc/__pycahce__
