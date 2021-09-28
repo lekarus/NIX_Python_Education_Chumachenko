@@ -45,7 +45,7 @@ class Transport(Engine, ABC):
 
 
 class Car(Transport):
-    def __init__(self, s_number, year, e_type,):
+    def __init__(self, s_number, year, e_type):
         super().__init__(s_number, year, e_type)
         Transport.transport_list.append(self.info)
 
@@ -117,7 +117,6 @@ train.move()
 print(helicopter.info)
 helicopter.year = 2009
 print(helicopter.info)
-car.color = 'red'
 print(car.info)
 airplane.start()
 airplane.stop()
