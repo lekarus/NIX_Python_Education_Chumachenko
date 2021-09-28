@@ -1,4 +1,3 @@
-# машина, самолет, поезд, корабль
 from abc import ABC, abstractmethod
 
 
@@ -29,33 +28,47 @@ class Transport(Engine, ABC):
     def move(self):
         pass
 
+    def __getitem__(self, item):
+        return Transport.transport_list[item]
+
+    def __len__(self):
+        return len(Transport.transport_list)
+
+    def __sub__(self, other):
+        Transport.transport_list.remove(other.info)
+
+    def __add__(self, other):
+        Transport.transport_list.append(other.info)
+
+    def __reversed__(self):
+        Transport.transport_list = Transport.transport_list[::-1]
+
 
 class Car(Transport):
-    def __init__(self, s_number, year, e_type, color):
+    def __init__(self, s_number, year, e_type,):
         super().__init__(s_number, year, e_type)
-        self.color = color
         Transport.transport_list.append(self.info)
 
     @property
     def info(self):
-        return f'{self.color} car, {self.year} year of issue'
+        return f'Car {self.year} year of issue'
 
     def move(self):
-        print(f'{self.s_number} car moving')
+        print(f'{self.s_number} car is moving')
+        super().move()
 
 
 class Airplane(Transport):
-    def __init__(self, s_number, year, e_type, capacity):
+    def __init__(self, s_number, year, e_type,):
         super().__init__(s_number, year, e_type)
-        self.capacity = capacity
         Transport.transport_list.append(self.info)
 
     @property
     def info(self):
-        return f'airplane {self.year} year of issue accommodates {self.capacity} people'
+        return f'airplane {self.year} year of issue'
 
     def move(self):
-        print(f'{self.s_number} airplane moving')
+        print(f'{self.s_number} airplane is moving')
 
 
 class Train(Transport):
@@ -70,7 +83,7 @@ class Train(Transport):
         return f'{self.t_type} train {self.year} year of issue'
 
     def move(self):
-        print(f'{self.s_number} train moving')
+        print(f'{self.s_number} train is moving')
 
 
 class Helicopter(Transport):
@@ -84,11 +97,19 @@ class Helicopter(Transport):
         return f'Helicopter with {self.n_blades} blades {self.year} year of issue'
 
     def move(self):
-        print(f'{self.s_number} train moving')
+        print(f'{self.s_number} helicopter is moving')
 
 
-car = Car(1029, 2008, 'petrol', 'yellow')
-airplane = Airplane(1031, 2001, 'kerosene', 130)
+class Hybrid(Car, Airplane):
+    def __init__(self, s_number, year, e_type):
+        super().__init__(s_number, year, e_type)
+
+    def move(self):
+        super().move()
+
+
+car = Car(1029, 2008, 'petrol')
+airplane = Airplane(1031, 2001, 'kerosene')
 train = Train(1001, 1990, 'diesel', 'night')
 helicopter = Helicopter(1035, 2000, 'kerosene', 4)
 
@@ -100,4 +121,14 @@ car.color = 'red'
 print(car.info)
 airplane.start()
 airplane.stop()
-print(Transport.transport_list)
+
+airplane - airplane
+airplane + airplane
+
+reversed(airplane)
+
+for i in airplane:
+    print(i)
+
+hybrid = Hybrid(1041, 2020, 'diesel')
+hybrid.move()
