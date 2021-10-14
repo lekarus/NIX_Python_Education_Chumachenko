@@ -2,3 +2,4 @@
 venv
 env
 calc/__pycahce__
+python/tests/.pytest_cache
